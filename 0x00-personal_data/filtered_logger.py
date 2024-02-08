@@ -85,3 +85,31 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
             database=db_name
             )
     return connection
+
+def main():
+    """
+    this is the main function
+    used to output the users info in formatted form
+    """
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM users")
+    fields = ["name",
+              "email",
+              "phone",
+              "ssn",
+              "password"
+             ]
+    logger = get_logger()
+
+    for row in cursor:
+        filtered_row = filter_datum(fields,
+                                    '***',
+                                    row,
+                                    ';'
+                                   )
+        logger.info(str(filtered_row))
+
+    cursor.close()
+    db.close()
+

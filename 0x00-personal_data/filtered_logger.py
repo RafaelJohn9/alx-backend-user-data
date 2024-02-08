@@ -2,9 +2,11 @@
 """
 Personal data - returns the log message obfuscated
 """
-from typing import List
-import re
 import logging
+import re
+from typing import List
+import mysql
+import os
 
 
 def filter_datum(
@@ -64,3 +66,26 @@ def get_logger() -> logging.Logger:
     logger.addHandler(stream_handler)
     logger.propagate = False
     return logger
+
+
+def get_db() -> mysql.connector.connection.MYSQLConnection:
+    """
+    gets the database using the specified environ var
+    """
+    db_username = os.environ.get("PERSONAL_DATA_DB_USERNAME", "root")
+    db_password = os.environ.get("PERSONAL_DATA_DB_PASSWORD", "")
+    db_host = os.envirion.get("PERSONAL_DATA_DB_HOST", "localhost")
+    db_name = os.environ.get("PERSONAL_DATA_DB_NAME")
+
+    # connecting to the MYSQL database
+    try:
+        connection = mysql.connector.connect(
+                user=db_username,
+                password=db_password,
+                host=db_host,
+                database=db_name
+                )
+        return connection
+    except mysql.connector.Error as err:
+        print(f"Error: {err}")
+        return None

@@ -78,14 +78,10 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     db_name = os.environ.get("PERSONAL_DATA_DB_NAME")
 
     # connecting to the MYSQL database
-    try:
-        connection = mysql.connector.connect(
-                user=db_username,
-                password=db_password,
-                host=db_host,
-                database=db_name
-                )
-        return connection
-    except mysql.connector.Error as err:
-        print(f"Error: {err}")
-        return None
+    connection = mysql.connector.connect(
+            user=db_username,
+            password=db_password,
+            host=db_host,
+            database=db_name
+            )
+    return connection

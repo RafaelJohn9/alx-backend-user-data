@@ -5,7 +5,7 @@ Personal data - returns the log message obfuscated
 import logging
 import re
 from typing import List
-import mysql
+import mysql.connector
 import os
 
 
@@ -68,13 +68,13 @@ def get_logger() -> logging.Logger:
     return logger
 
 
-def get_db() -> mysql.connector.connection.MYSQLConnection:
+def get_db() -> mysql.connector.connection.MySQLConnection:
     """
     gets the database using the specified environ var
     """
     db_username = os.environ.get("PERSONAL_DATA_DB_USERNAME", "root")
     db_password = os.environ.get("PERSONAL_DATA_DB_PASSWORD", "")
-    db_host = os.envirion.get("PERSONAL_DATA_DB_HOST", "localhost")
+    db_host = os.environ.get("PERSONAL_DATA_DB_HOST", "localhost")
     db_name = os.environ.get("PERSONAL_DATA_DB_NAME")
 
     # connecting to the MYSQL database

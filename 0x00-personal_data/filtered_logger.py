@@ -28,13 +28,16 @@ class RedactingFormatter(logging.Formatter):
     SEPARATOR = ";"
 
     def __init__(self, fields: List[str]):
+        """
+        contain object attr
+        """
         super(RedactingFormatter, self).__init__(self.FORMAT)
         self.fields = fields
 
     def format(self, record: logging.LogRecord) -> str:
-        NotImplementedError
-
-    def format(self, record: logging.LogRecord) -> str:
+        """
+        correctly formats user's data
+        """
         for field in self.fields:
             record.msg = re.sub(fr'({field})=([^;]+)',
                                 fr'\1={self.REDACTION}',

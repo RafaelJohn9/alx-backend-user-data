@@ -86,6 +86,7 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
             )
     return connection
 
+
 def main():
     """
     this is the main function
@@ -99,7 +100,7 @@ def main():
               "phone",
               "ssn",
               "password"
-             ]
+              ]
     logger = get_logger()
 
     for row in cursor:
@@ -107,9 +108,8 @@ def main():
                                     '***',
                                     row,
                                     ';'
-                                   )
+                                    )
         logger.info(str(filtered_row))
 
     cursor.close()
     db.close()
-

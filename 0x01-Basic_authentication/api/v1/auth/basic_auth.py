@@ -93,13 +93,10 @@ class BasicAuth(Auth):
         if False in parameter_checker:
             return None
 
-        user = User.search({'email': user_email})
-
-        if user:
-            user = user[0]
-        else:
+        try:
+            user = User.search({'email': user_email})
+            if user:
+                if user[0].is_valid_password(user_pwd):
+                    return user[0]
+        except Exception:
             return None
-
-        if not user.is_valid_password(user_pwd):
-            return None
-        return user

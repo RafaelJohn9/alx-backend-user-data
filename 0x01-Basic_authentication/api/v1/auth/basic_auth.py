@@ -100,3 +100,16 @@ class BasicAuth(Auth):
                     return user[0]
         except Exception:
             return None
+
+    def current_user(self, request=None) -> TypeVar('User'):
+        """overloads Auth and retrieves the User instance"""
+        if request is None:
+            return None
+        authorization_header = self.authorization_header(request)
+        base64_auth_header = self.extract_base64_authorization_header(
+            authorization_header)
+        decoded_auth_header = self.decode_base64_authorization_header(
+            base64_auth_header)
+        user_email, user_pwd = self.extract_user_credentials(
+            decoded_auth_header)
+        return self.user_object_from_credentials(user_email, user_pwd)

@@ -5,6 +5,8 @@ it inherits from Auth
 """
 from api.v1.auth.auth import Auth
 import base64
+from models.user import User
+from typing import TypeVar
 
 
 class BasicAuth(Auth):
@@ -73,3 +75,31 @@ class BasicAuth(Auth):
 
         email, password = decoded_base64_authorization_header.split(':')
         return (email, password)
+
+    def user_object_from_credentials(self,
+                                     user_email: str,
+                                     user_pwd: str
+                                     ) -> TypeVar('User'):
+        """
+        fetches and validates user's credentials
+        """
+        parameter_checker = [
+                             user_email is not None,
+                             user_pwd is not None,
+                             User.search({'email': user_email}) is not None
+                             if isinstance(user_email, str)
+                             else False
+                             ]
+        if False in parameter_checker:
+            return None
+
+        user = User.search({'email': user_email})
+
+        if user:
+            user = user[0]
+        else:
+            return None
+
+        if not user.is_valid_password(user_pwd):
+            return None
+        return user

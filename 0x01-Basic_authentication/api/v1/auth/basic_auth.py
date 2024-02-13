@@ -73,7 +73,9 @@ class BasicAuth(Auth):
         if False in parameter_checker:
             return (None, None)
 
-        email, password = decoded_base64_authorization_header.split(':')
+        credentials = decoded_base64_authorization_header.split(':')
+        email = credentials[0]
+        password = ':'.join(credentials[1:]) if len(credentials) > 2 else credentials[1]
         return (email, password)
 
     def user_object_from_credentials(self,

@@ -14,10 +14,13 @@ class Auth:
         """
         it used to check if a certain path requires authorization
         """
-        if path and path[-1] != '/':
+        if not path and not excluded_paths:
+            return True
+
+        if path[-1] != '/':
             path += '/'
 
-        if path and path in excluded_paths:
+        if path in excluded_paths:
             return False
 
         return True

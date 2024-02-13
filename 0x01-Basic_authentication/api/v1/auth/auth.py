@@ -14,7 +14,7 @@ class Auth:
         """
         it used to check if a certain path requires authorization
         """
-        if not path and not excluded_paths:
+        if not path or not excluded_paths:
             return True
 
         if path[-1] != '/':

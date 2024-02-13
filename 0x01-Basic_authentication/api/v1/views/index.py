@@ -32,3 +32,11 @@ def unauthorized() -> None:
     it is used to test unauthorized
     access """
     abort(401)
+
+
+@app_views.route('/forbidden', strict_slashes=False)
+def forbidden() -> None:
+    """
+    it is used to test unauthorized
+    access """
+    abort(403)

@@ -90,10 +90,7 @@ class BasicAuth(Auth):
         """
         parameter_checker = [
                              user_email is not None,
-                             user_pwd is not None,
-                             User.search({'email': user_email}) is not None
-                             if isinstance(user_email, str)
-                             else False
+                             user_pwd is not None
                              ]
         if False in parameter_checker:
             return None

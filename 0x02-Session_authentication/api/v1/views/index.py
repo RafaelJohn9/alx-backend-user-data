@@ -27,16 +27,12 @@ def stats() -> str:
 
 
 @app_views.route('/unauthorized', strict_slashes=False)
-def unauthorized() -> None:
-    """
-    it is used to test unauthorized
-    access """
+def unauthorized():
+    """endpoint must raise a 401"""
     abort(401)
 
 
 @app_views.route('/forbidden', strict_slashes=False)
-def forbidden() -> None:
-    """
-    it is used to test unauthorized
-    access """
+def forbidden():
+    """endpoint must raise a 403"""
     abort(403)

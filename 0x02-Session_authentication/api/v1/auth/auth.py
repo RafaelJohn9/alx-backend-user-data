@@ -1,45 +1,34 @@
 #!/usr/bin/env python3
-"""
-a module that contains a class that manages API authentication
-"""
+"""the class Auth"""
 from flask import request
 from typing import List, TypeVar
+import fnmatch
 
 
 class Auth:
-    """
-    it used in authentication of users
-    """
+    """class named Auth"""
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
-        """
-        it used to check if a certain path requires authorization
-        """
-        if not path or not excluded_paths:
+        """require auth"""
+        if path is None:
             return True
-
-        if path[-1] != '/':
-            path += '/'
+        if excluded_paths is None or excluded_paths == []:
+            return True
         for excluded_path in excluded_paths:
             stripped = excluded_path.rstrip('*')
             if path.startswith(stripped):
                 return False
-
-        if path in excluded_paths:
+        if path in excluded_paths or path + '/' in excluded_paths:
             return False
-
         return True
 
     def authorization_header(self, request=None) -> str:
-        """
-        used for authorization header
-        """
-        if not request or not request.headers.get("Authorization"):
+        """that returns None - request will be the Flask request object"""
+        if request is None:
             return None
-        else:
-            return request.headers.get("Authorization")
+        if "Authorization" not in request.headers:
+            return None
+        return request.headers["Authorization"]
 
     def current_user(self, request=None) -> TypeVar('User'):
-        """
-        returns None request
-        """
+        """that returns None - request will be the Flask request object"""
         return None

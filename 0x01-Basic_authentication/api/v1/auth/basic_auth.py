@@ -78,7 +78,7 @@ class BasicAuth(Auth):
         if len(credentials) > 2:
             password = ':'.join(credentials[1:])
         else:
-            credentials[1]
+            password = credentials[1]
         return (email, password)
 
     def user_object_from_credentials(self,

@@ -56,7 +56,7 @@ class DB:
         try:
             query = table.filter_by(**kwargs).one()
         except NoResultFound:
-            raise NoResultFound
+            raise NoResultFound()
         except InvalidRequestError:
-            raise InvalidRequestError
+            raise InvalidRequestError()
         return query

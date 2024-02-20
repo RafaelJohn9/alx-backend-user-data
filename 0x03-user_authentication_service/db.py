@@ -51,7 +51,7 @@ class DB:
         """
         finds user through key-word filter
         """
-        session = self.__session
+        session = self._session
         table = session.query(User)
         try:
             query = table.filter_by(**kwargs).one()

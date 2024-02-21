@@ -11,7 +11,7 @@ AUTH = Auth()
 
 
 @app.route('/')
-def welcome():
+def home():
     """
     provides a welcome message as the root to api
     """
@@ -39,8 +39,6 @@ def login():
     """
     email = request.form.get('email')
     password = request.form.get('password')
-    if not email or not password:
-        abort 401
     if AUTH.valid_login(email, password):
         AUTH.create_session(email)
         return {"email": email, "message": "logged in"}
@@ -58,7 +56,7 @@ def logout():
     user = AUTH.get_user_from_session_id(session_id)
     if user:
         AUTH.destroy_session(user.id)
-        redirect(url_for('welcome'))
+        redirect(url_for('home'))
     abort(403)
 
 

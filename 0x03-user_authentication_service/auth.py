@@ -49,7 +49,7 @@ class Auth:
 
     def valid_login(self, email: str, password: str) -> bool:
         """
-        authorizes login
+        authorizes login for user
         """
         try:
             user = self._db.find_user_by(email=email)
@@ -70,3 +70,12 @@ class Auth:
         except NoResultFound:
             return None
         return session_id
+
+    def get_user_from_session_id(session_id: str) -> User:
+        """
+        gets the user through a session id
+        """
+        try:
+            return self._db.find_user_by(session_id=session_id)
+        except NoResultFound:
+            return None

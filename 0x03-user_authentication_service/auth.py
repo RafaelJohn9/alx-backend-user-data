@@ -8,6 +8,7 @@ import bcrypt
 from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.orm.exc import NoResultFound
 from db import DB
+import uuid
 from user import User
 
 
@@ -49,3 +50,9 @@ class Auth:
             return False
         return bcrypt.checkpw(password.encode('utf-8'),
                               user.hashed_password.encode('utf-8'))
+
+    def _generate_uuid(self):
+        """
+        generates a uuid
+        """
+        return str(uuid.uuid4())

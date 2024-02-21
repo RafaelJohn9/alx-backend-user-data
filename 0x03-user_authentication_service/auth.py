@@ -21,7 +21,7 @@ def _hash_password(password: str) -> str:
     return hashed_password.decode('utf-8')
 
 
-def _generate_uuid(self):
+def _generate_uuid() -> str:
     """
     generates a uuid
     """

@@ -12,6 +12,9 @@ AUTH = Auth()
 
 @app.route('/')
 def welcome():
+    """
+    provides a welcome message as the root to api
+    """
     return jsonify({"message": "Bienvenue"})
 
 

@@ -39,6 +39,8 @@ def login():
     """
     email = request.form.get('email')
     password = request.form.get('password')
+    if not email or not password:
+        abort 401
     if AUTH.valid_login(email, password):
         AUTH.create_session(email)
         return {"email": email, "message": "logged in"}

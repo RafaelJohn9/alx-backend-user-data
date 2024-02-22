@@ -111,14 +111,14 @@ class Auth:
         it is used to update a user's password from the database
         """
         if not reset_token or not password:
-            return None 
+            return None
 
         try:
             user = self._db.find_user_by(reset_token=reset_token)
             self._db.update_user(
                                  user.id,
-                                 hashed_password = _hash_password(password),
-                                 reset_token = None
+                                 hashed_password=_hash_password(password),
+                                 reset_token=None
                                  )
         except NoResultFound:
             raise ValueError

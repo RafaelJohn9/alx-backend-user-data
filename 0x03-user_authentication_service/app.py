@@ -92,7 +92,7 @@ def get_reset_password_token():
         abort(403)
 
 
-@app.route('/reset_password', strict_slashes=False)
+@app.route('/reset_password', methods=['PUT'], strict_slashes=False)
 def update_password():
     """
     it is used to update the user's password

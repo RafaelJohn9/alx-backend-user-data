@@ -23,7 +23,7 @@ def _hash_password(password: str) -> str:
 
 def _generate_uuid() -> str:
     """
-    generates a uuid
+     it  generates a uuid when called
     """
     return str(uuid.uuid4())
 
@@ -39,6 +39,10 @@ class Auth:
         self._db = DB()
 
     def register_user(self, email: str, password: str) -> User:
+        """
+        it is used to register a new user to the db
+        if not yet registered else throws an error
+        """
         try:
             if self._db.find_user_by(email=email):
                 raise ValueError(f"User {email} already exists")
@@ -89,3 +93,15 @@ class Auth:
     def destroy_session(self, user_id: int) -> None:
         """ updates the corresponding user's session ID to none """
         self._db.update_user(user_id, session_id=None)
+
+    def get_reset_password_token(self,  email: str) -> str:
+        """
+        it genereates a reset password token
+        """
+        try:
+            user = self._db.find_user_by(email=email)
+            reset_token = _generate_uuid()
+            user.reset_token = reset_token
+            return reset_token
+        except NoResultFound:
+            raise ValueError

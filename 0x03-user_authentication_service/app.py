@@ -40,8 +40,10 @@ def login():
     email = request.form.get('email')
     password = request.form.get('password')
     if AUTH.valid_login(email, password):
-        AUTH.create_session(email)
-        return {"email": email, "message": "logged in"}
+        session_id = AUTH.create_session(email)
+        response = jsonify({"email": email, "message": "logged in"})
+        response.set_cookie('session_id', session_id)
+        return response
 
     abort(401)
 
@@ -58,6 +60,27 @@ def logout():
         AUTH.destroy_session(user.id)
         redirect(url_for('home'))
     abort(403)
+
+
+@app.route('/profile', methods=['GET'], strict_slashes=False)
+def profile():
+    """
+    it is used to get the profile of the user
+    """
+    session_id = request.cookies.get("session_id")
+    user = AUTH.get_user_from_session_id(session_id)
+    if user:
+        response = jsonify({'email': user.email})
+        return response
+    else:
+        abort(403)
+
+
+@app.route('/reset_password', strict_slashes=False)
+def get_reset_password_token():
+    """
+    generates a password reset token
+    """
 
 
 if __name__ == "__main__":
